@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>captcha</title>
+</head>
+<body>
+	<h1 style="color: green;">Verify the captcha code</h1>
+	<center><canvas id="canvas" width="300" height="50"></canvas></center>
+	<br><br>
+	Enter the code:<input type="text" id='captcha' >
+	<button onclick="check()">submit</button>
+	<p id="disp"></p>
+	<script type="text/javascript">
+		var str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		function addTextToImage(imagePath, text) {
+			var circle_canvas = document.getElementById("canvas");
+			var context = circle_canvas.getContext("2d");
+		var img = new Image();
+		img.src = imagePath;
+		img.onload = function () {
+   			context.drawImage(img, 0, 0);
+    		context.lineWidth = 1;
+    		context.fillStyle = "#000000";
+    		context.lineStyle = "#ffff00";
+    		context.font = "20px sans-serif";
+    		context.fillText(text, 15, 30);
+			};
+		}
+		function randomStr(len, arr) { 
+    	    var ans = ''; 
+    	    for (var i = len; i > 0; i--) { 
+    	        ans +=  
+    	          arr[Math.floor(Math.random() * arr.length)]; 
+    	    } 
+    	    return ans; 
+    	} 
+		var tex=randomStr(Math.floor(Math.random() * 7)+3,str)+" "+randomStr(Math.floor(Math.random() * 7)+3,str)+" "+randomStr(Math.floor(Math.random() * 7)+3,str);
+		addTextToImage("img.png", tex);
+
+		function check(){
+    		var c=document.getElementById("captcha").value;
+    		if(c==tex){
+    			document.getElementById("disp").innerHTML="Successful";
+    		}
+    		else{
+    			alert("Wrong captcha");
+    			location.reload();
+    		}
+    	}
+	</script>
+</body>
+</html>
